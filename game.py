@@ -49,13 +49,13 @@ class PokemonClass:
             keys = pyg.key.get_pressed()
 
             if keys[pyg.K_w] or keys[pyg.K_UP]:
-                y -= self.speed
-            elif keys[pyg.K_s] or keys[pyg.K_DOWN]:
                 y += self.speed
+            elif keys[pyg.K_s] or keys[pyg.K_DOWN]:
+                y -= self.speed
             elif keys[pyg.K_d] or keys[pyg.K_RIGHT]:
-                x += self.speed
-            elif keys[pyg.K_a] or keys[pyg.K_LEFT]:
                 x -= self.speed
+            elif keys[pyg.K_a] or keys[pyg.K_LEFT]:
+                x += self.speed
 
             screen.fill(0)  # clearing screen
             screen.blit(player, (x, y))  # loads and displays the sprite at (x, y)
