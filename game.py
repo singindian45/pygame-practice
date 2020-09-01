@@ -5,7 +5,7 @@ from pygame.locals import *
 class PokemonClass:
     """
     Initialising the class with HP points, movement, speed, name, level and exp points attributed to a pokemon
-
+    the speed attribute will decide how many pixels the sprite will move when a direction key is pressed
     """
     def __init__(self, hp: int, movement: str, speed: int, name: str, lvl: int, exp: int, win_size: tuple):
         self.hp = hp
@@ -30,6 +30,7 @@ class PokemonClass:
             "\nYour pokemon is level ", self.lvl,
             "\nYour pokemon has ", self.exp, " exp",
         )
+
     """
     x, y are the starting position of the charcter
     width and height indicate sprite width and height
