@@ -38,9 +38,9 @@ def y_or_n(choice: str):
 def confirm(sentence: str):
     choice = inputf(sentence)
     if choice.lower().strip() != "y" or choice.lower().strip() != "yes" or choice.lower().strip() != "":
-        confirm = inputf("Would you like to change your choice?[Y/n]\t").lower().strip()
-        if confirm != "y" or confirm != "yes" or confirm != "":
-            y_or_n(sentence)
+        confirm = inputf("Are you sure you want to change your choice??[Y/n]\t").lower().strip()
+        if confirm == "y" or confirm == "yes" or confirm == "":
+            confirm(sentence)
 
 
 def event_choice(events: dict):
@@ -94,7 +94,7 @@ def game_save(Trainer):
 
 
 class Trainer:
-    def __init__(self, name: str, money = 1000, pokemon: dict, location: str):
+    def __init__(self, name: str, pokemon: dict, location: str, money = 1000):
         self.name = name
         self.money = money
         self.pokemon = pokemon
@@ -105,12 +105,12 @@ class Trainer:
 
     def __str__(self):
         return f"Pkmn Trainer {self.name}'s Trainer Card'\nStats:\nPokemon: {self.pokemon}\nMoney: {self.money}"
-    def PokemonInventory(self):
+    # def PokemonInventory(self): just commenting for a test
 
 
-    def CapturePokemon(self):
-        global capture
-        capture = True
+    #def CapturePokemon(self):
+        #global capture
+        #capture = True
 
 
 class Pokemon:
@@ -159,14 +159,14 @@ class Pokemon:
                     self.attack /= 2
                     self.defense /= 2
                     string_1_attack = "It's not very effective..."
-                    string_2_attack = "It's very effective!"
+                    string_2_attack = "It's super effective!"
                 # Pokemon 2 is WEAK against Pokemon 1
                 if Pokemon2.types == version[(i + 2) % 3]:
                     self.attack *= 2
                     self.defense *= 2
                     Pokemon2.attack /= 2
                     Pokemon2.defense /= 2
-                    string_1_attack = "It's very effective!"
+                    string_1_attack = "It's super effective!"
                     string_2_attack = "It's not very effective..."
         while (self.bars > 0) and (Pokemon2.bars > 0):
             # Print the health of each pokemon
