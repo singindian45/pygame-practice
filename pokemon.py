@@ -35,6 +35,14 @@ def y_or_n(choice: str):
         return False
 
 
+def confirm(sentence: str):
+    choice = inputf(sentence)
+    if choice.lower().strip() != "y" or choice.lower().strip() != "yes" or choice.lower().strip() != "":
+        confirm = inputf("Would you like to change your choice?[Y/n]\t").lower().strip()
+        if confirm != "y" or confirm != "yes" or confirm != "":
+            y_or_n(sentence)
+
+
 def event_choice(events: dict):
     count = len(events)
     choices = [i for i in range(count)]
@@ -86,7 +94,7 @@ def game_save(Trainer):
 
 
 class Trainer:
-    def __init__(self, name: str, money: int, pokemon: dict, location: str):
+    def __init__(self, name: str, money = 1000, pokemon: dict, location: str):
         self.name = name
         self.money = money
         self.pokemon = pokemon
@@ -97,23 +105,29 @@ class Trainer:
 
     def __str__(self):
         return f"Pkmn Trainer {self.name}'s Trainer Card'\nStats:\nPokemon: {self.pokemon}\nMoney: {self.money}"
+    def PokemonInventory(self):
+
 
     def CapturePokemon(self):
         global capture
         capture = True
 
 
-class PokemonFather:
-    def __init__(self, names, types, moves, EVs, health = "="*10):
+class Pokemon:
+    def __init__(self, name, types, moves, EVs, health = "="*25, exp = 0):
         self.name = name
         self.moves = moves
         self.attack = EVs["ATTACK"]
         self.defense = EVs["DEFENSE"]
+        self.health = health
+        self.types = types
         self.bars = 20  # Amount of health bars
+        self.exp = exp
 
-    def fight(self, pokemon2):
+    def fight(self, Pokemon2):
         # This allow 2 pokemons fight each other
         # Print fight information
+        self.Pokemon2=Pokemon2
         print("-------POKEMON BATTLE-------")
         print(f"\n{self.name}")
         print("TYPE/", self.types)
@@ -133,9 +147,9 @@ class PokemonFather:
         # Consider type advantages
         version = ["Fire", "Water", "Grass"]
         for i, k in enumerate(version):
-            if self.type == k:
+            if self.types == k:
                 # Both are the same type
-                if Pokemon2.type == k:
+                if Pokemon2.types == k:
                     string_1_attack = "It's not very effective..."
                     string_2_attack = "It's not very effective..."
                 # Pokemon2 is STRONG against pokemon1
@@ -154,16 +168,16 @@ class PokemonFather:
                     Pokemon2.defense /= 2
                     string_1_attack = "It's very effective!"
                     string_2_attack = "It's not very effective..."
-        while (self.bars > 0) and (Pokemon2 > 0):
+        while (self.bars > 0) and (Pokemon2.bars > 0):
             # Print the health of each pokemon
             print(f"{self.name}\t\tHLTH\t{self.health}")
             print(f"{Pokemon2.name}\t\tHLTH\t{Pokemon2.health}\n")
 
             print(f"Go {self.name}!")
             for i, x in enumerate(self.moves):
-                print("f{i+1}.", x)
+                print(f"{i+1}.", x)
             index = int(input("Pick a move: "))
-            printf(f"{self.name} used {moves[index-1]}!")
+            printf(f"{self.name} used {self.moves[index-1]}!")
             time.sleep(1)
             printf(string_1_attack)
 
@@ -181,7 +195,7 @@ class PokemonFather:
 
             # Check if the pokemon has fainted
             if Pokemon2.bars <= 0:
-                printf("\n...", Pokemon2.name + " fainted")
+                printf(f"\n... {Pokemon2.name} fainted")
                 break
             # ----------------------------------If Pokemon2's hasn't fainted, then it's Pokemon2's turn-------------------------
             print(f"Go {Pokemon2.name}!")
@@ -210,6 +224,11 @@ class PokemonFather:
                 break
         money = np.random.choice(5000)
         printf(f"Opponent paid you {money}.")
+if __name__=="__main__":
+    #Create a pokemon
+    Charizard = Pokemon('Charizard', 'Fire', ['Flamethrower', 'Fly', 'Blast Burn', 'Fire Punch'], {'ATTACK':12, 'DEFENSE': 8})
+    Blastoise = Pokemon('Blastoise', 'Water', ['Water Gun', 'Bubblebeam', 'Hydro Pump', 'Surf'],{'ATTACK': 10, 'DEFENSE':10})
+    Venusaur = Pokemon('Venusaur', 'Grass', ['Vine Wip', 'Razor Leaf', 'Earthquake', 'Frenzy Plant'],{'ATTACK':8, 'DEFENSE':12})
 
     def PokemonState(self):
         print(
@@ -228,67 +247,66 @@ class PokemonFather:
             "defense",
         )
 
+# start the BATTLE!
+Charizard.fight(Venusaur)
 
 # -----------------------------------------------------------------------------------------------------------
 
 # ----------Story-----------
-printf(
-    """???: Hello there! Welcome to the world of POKEMON! My name is Oak!"
-Oak: People call me the POKEMON PROF!
-Oak: This world is inhabited by creatures called POKEMON!
-For some people, POKEMON are pets. Others use them for fights. Myself...
-I study POKEMON as a profession.
-
-Oak: First, what is your name?
-"""
-)
-player = Trainer(inputf("Enter your name:\t"), 0, {}, "Pallet Town")
-
-choice = inputf(f"Right! So your name is {player.name}![Y/n]\t")
-if not y_or_n(choice):
-    player.name = inputf("Enter your name:\t")
-    printf(f"Right so your name is {player.name}!")
-
-printf(
-    """
-Prof.Oak: This is my grandson. He's been your rival since you were a baby.
-...Erm, what is his name again?
-"""
-)
-
-rival = Trainer(inputf("Enter your rival's name:\t"), 0, {}, player.location)
-choice = inputf(f"That's right! I remember now! His name is {rival.name}![Y/n]\t")
-
-if not y_or_n(choice):
-    rival.name = inputf("Enter your rival's name:\t")
-    printf(f"That's right! I remember now! His name is {rival.name}!")
-
-printf(
-    """
-Prof.Oak: Your very own POKEMON legend is about to unfold! A world of dreams and adventures with POKEMON awaits! Let's go!
-Scene: You are in your bedroom now. You go downstairs to find your mother watching a program on T.V.
-"""
-)
-
-choice = inputf("Do you talk to her?[Y/n]\t")
-
-if y_or_n(choice):
-    printf(
-        "\nMother: Right. All boys leave home some day. It said so on TV.\nProf.Oak, next door, is looking for you."
-    )
-else:
-    printf(
-        "\nYour mother calls your name.\nMother: Prof.Oak, next door, is looking for you.\n"
-    )
-
-printf(
-    """
-You step outside the house and see explore your hometown.
-You look at the boundless blue sky above you, while the sweet scent of oddish in the forests
-reminds you of the amazing journey you're about to embark on!
-
-'There's no place like Pallet Town', you say as you run towards Prof. Oak's Lab.
-
-When you arrive to the lab, you find that Prof.Oak has gone outside on a field trip.
-"""
-)
+# printf(
+#     """???: Hello there! Welcome to the world of POKEMON! My name is Oak!
+# Oak: People call me the POKEMON PROF!
+# Oak: This world is inhabited by creatures called POKEMON!
+# For some people, POKEMON are pets. Others use them for fights. Myself...
+# I study POKEMON as a profession.
+#
+# Oak: First, what is your name?
+# """
+# )
+# player = Trainer(inputf("Enter your name:\t"), 0, {}, "Pallet Town")
+#
+# choice = confirm(f"Right! So your name is {player.name}![Y/n]\t")
+# if not choice:
+#     printf(f"Right so your name is {player.name}!")
+#
+#
+# printf(
+#     """
+# Prof.Oak: This is my grandson. He's been your rival since you were a baby.
+# ...Erm, what is his name again?
+# """
+# )
+#
+# rival = Trainer(inputf("Enter your rival's name:\t"), 0, {}, player.location)
+# choice = confirm(f"That's right! I remember now! His name is {rival.name}![Y/n]\t")
+#
+#
+# printf(
+#     """
+# Prof.Oak: Your very own POKEMON legend is about to unfold! A world of dreams and adventures with POKEMON awaits! Let's go!
+# Scene: You are in your bedroom now. You go downstairs to find your mother watching a program on T.V.
+# """
+# )
+#
+# choice = inputf("Do you talk to her?[Y/n]\t")
+#
+# if y_or_n(choice):
+#     printf(
+#         "\nMother: Right. All boys leave home some day. It said so on TV.\nProf.Oak, next door, is looking for you."
+#     )
+# else:
+#     printf(
+#         "\nYour mother calls your name.\nMother: Prof.Oak, next door, is looking for you.\n"
+#     )
+#
+# printf(
+#     """
+# You step outside the house and see explore your hometown.
+# You look at the boundless blue sky above you, while the sweet scent of oddish in the forests
+# reminds you of the amazing journey you're about to embark on!
+#
+# 'There's no place like Pallet Town', you say as you run towards Prof. Oak's Lab.
+#
+# When you arrive to the lab, you find that Prof.Oak has gone outside on a field trip.
+# """
+# )
