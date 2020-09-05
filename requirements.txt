@@ -1,5 +1,4 @@
 sys
 atexit
-json
 numpy
 time
