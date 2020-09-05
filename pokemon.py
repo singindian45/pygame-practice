@@ -19,26 +19,6 @@ atexit.register(exit_handler)
 
 # -------------------------------------------------------
 
-
-class Trainer:
-    def __init__(self, name: str, pokemon: dict, location: str, money=1000):
-        self.name = name
-        self.money = money
-        self.pokemon = pokemon
-        self.location = location
-
-    def current_location(self):
-        return f"You are currently in {self.location}"
-
-    def __str__(self):
-        return f"Pkmn Trainer {self.name}'s Trainer Card'\nStats:\nPokemon: {self.pokemon}\nMoney: {self.money}"
-
-    # def PokemonInventory(self): just commenting for a test
-
-    # def CapturePokemon(self):
-    # global capture
-    # capture = True
-
 if __name__ == "__main__":
     # Create a pokemon
     Charizard = Pokemon(
