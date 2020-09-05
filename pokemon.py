@@ -2,7 +2,6 @@
 Terminal Game
 """
 import atexit
-import json
 import sys
 import time
 from game_functions import *
