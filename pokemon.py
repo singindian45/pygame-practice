@@ -28,6 +28,23 @@ def inputf(sentence: str):
     return choice
 
 
+def dialogue(dialogues: dict):
+    for speaker in dialogues:
+        space = 13
+        if len(speaker) > space:
+            space = len(speaker)
+        dialogue = dialogues[speaker]
+
+        if isinstance(dialogue, str):
+            printf(f"{speaker.ljust(space)}: {dialogue}")
+            print()
+        elif isinstance(dialogue, list):
+            printf(f"{speaker.ljust(space)}: {dialogue[0]}")
+            for line in dialogue[1:]:
+                printf(" "*(space+2) + f"{line}")
+            print()
+
+
 def y_or_n(choice: str):
     if choice.lower().strip() == "y" or choice.lower().strip() == "yes" or choice == "":
         return True
@@ -273,35 +290,37 @@ if __name__ == "__main__":
 # -----------------------------------------------------------------------------------------------------------
 
 # ----------Story-----------
-printf(
-    """???: Hello there! Welcome to the world of Pokemon! My name is Oak!
-Prof.Oak: People call me the Pokemon Professor!
-          This world is inhabited by creatures called Pokemon!
-          For some people, Pokemon are pets. Others use them for fights. Myself...
-          I study Pokemon as a profession.
-
-Oak: First, what is your name?
-"""
+dialogue(
+    {
+        "???": "Hello there! Welcome to the world of Pokemon! My name is Oak!",
+        "Prof.Oak": [
+            "People call me the Pokemon Professor!",
+            "This world is inhabited by creatures called Pokemon!",
+            "For some people, Pokemon are pets. Others use them for fights. Myself...",
+            "I study Pokemon as a profession.",
+            "First, what is your name?"
+          ]
+    }
 )
 
 player = Trainer(confirm("Enter your name:\t"), 0, {}, "Pallet Town")
 printf(f"Right! So your name is {player.name}!")
+print()
 
-printf(
-    """
-Prof.Oak: This is my grandson. He's been your rival since you were a baby.
-...Erm, what is his name again?
-"""
+dialogue({
+    "Prof.Oak": ["This is my grandson. He's been your rival since you were a baby.", "...Erm, what is his name again?"]
+}
 )
 
 rival = Trainer(confirm("Enter your rival's name:\t"), 0, {}, player.location)
 printf(f"That's right! I remember now! His name is {rival.name}!")
+print()
 
-printf(
-    """
-Prof.Oak: Your very own POKEMON legend is about to unfold! A world of dreams and adventures with POKEMON awaits! Let's go!
-Scene: You are in your bedroom now. You go downstairs to find your mother watching a program on T.V.
+dialogue({
+    "Prof.Oak": "Your very own POKEMON legend is about to unfold! A world of dreams and adventures with POKEMON awaits! Let's go!"
+})
 
+print("""Scene: You are in your bedroom now. You go downstairs to find your mother watching a program on T.V.
 Talk to her?
 """
 )
