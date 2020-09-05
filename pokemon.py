@@ -63,7 +63,7 @@ if __name__ == "__main__":
 
 
 # start the BATTLE!
-Charizard.fight(Venusaur)
+#Charizard.fight(Venusaur)
 
 # -----------------------------------------------------------------------------------------------------------
 
