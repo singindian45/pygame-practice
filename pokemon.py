@@ -96,7 +96,7 @@ def game_save(Trainer):
 
 
 class Trainer:
-    def __init__(self, name: str, pokemon: dict, location: str, money=1000):
+    def __init__(self, name: str, pokemon: dict, location: str, money = 1000):
         self.name = name
         self.money = money
         self.pokemon = pokemon
@@ -110,9 +110,9 @@ class Trainer:
 
     # def PokemonInventory(self): just commenting for a test
 
-    # def CapturePokemon(self):
-    # global capture
-    # capture = True
+    #def CapturePokemon(self):
+        #global capture
+        #capture = True
 
 
 class Pokemon:
