@@ -1,8 +1,9 @@
 import numpy as np
 import time
+from game_functions import printf, inputf, y_or_n
 
 class Trainer:
-    def __init__(self, name: str, pokemon: dict, location: str, money=1000):
+    def __init__(self, name: str, location: str, money=1000, pokemon={}):
         self.name = name
         self.money = money
         self.pokemon = pokemon
@@ -48,7 +49,7 @@ class Pokemon:
         print("DEFENSE/", Pokemon2.defense)
         print("LVL/", 3 * (1 + np.mean([Pokemon2.attack, Pokemon2.defense])))
 
-        time.sleep(2)
+        time.sleep(1)
 
         # Consider type advantages
         version = ["Fire", "Water", "Grass"]
@@ -133,12 +134,10 @@ class Pokemon:
     def PokemonState(self):
         print(
             "Your pokemon has: ",
-            self.hp,
+            self.health,
             "\nYour pokemon has: ",
             self.exp,
-            "\nYour pokemon has: ",
-            self.speed,
-            "speed",
+            "exp points",
             "\nYour pokemon has: ",
             self.attack,
             "attack",
@@ -146,3 +145,39 @@ class Pokemon:
             self.defense,
             "defense",
         )
+
+
+#--------------------Testing
+Charizard = Pokemon('Charizard', 'Fire', ['Flamethrower', 'Fly', 'Blast Burn', 'Fire Punch'], {'ATTACK':12, 'DEFENSE': 8})
+Blastoise = Pokemon('Blastoise', 'Water', ['Water Gun', 'Bubblebeam', 'Hydro Pump', 'Surf'],{'ATTACK': 10, 'DEFENSE':10})
+Venusaur = Pokemon('Venusaur', 'Grass', ['Vine Wip', 'Razor Leaf', 'Earthquake', 'Frenzy Plant'],{'ATTACK':8, 'DEFENSE':12})
+#
+# list_of_class_instances = {"Charizard": Charizard, "Blastoise": Blastoise, "Venusaur": Venusaur}
+#
+# for i in list_of_class_instances:
+#     list_of_class_instances[i].PokemonState()
+
+# Charizard.fight(Venusaur)
+#
+# Venusaur.PokemonState()
+
+#
+def pkmn_fight(player, rival_pkmn, catch=False):
+    for pokemon in player.pokemon:
+        pokemon_obj = player.pokemon[pokemon]
+        if len(pokemon_obj.health) != 0:
+            pokemon_obj.fight(rival_pkmn)
+            break
+
+    if catch:
+        if y_or_n(inputf(f"Would you like to catch {rival_pkmn.name}?[Y/n]\t")):
+            if y_or_n(inputf(f"Would you like to nickname {rival_pkmn.name}?[Y/n]\t")):
+                nick = inputf(f"Enter {rival_pkmn.name}'s nickname:\t")
+                player.pokemon[nick] = rival_pkmn
+
+
+hero_volty = Trainer("Volty", "Pallet Town", money=1000, pokemon={"Flareo": Charizard})
+
+pkmn_fight(hero_volty, Venusaur, catch=True)
+
+print(hero_volty.pokemon)
