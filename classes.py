@@ -2,7 +2,6 @@ import numpy as np
 import time
 from game_functions import printf, inputf, y_or_n
 
-
 class Trainer:
     def __init__(self, name: str, location: str, money=1000, pokemon={}):
         self.name = name
@@ -22,7 +21,6 @@ class Trainer:
     # def CapturePokemon(self):
     # global capture
     # capture = True
-
 
 class Pokemon:
     def __init__(self, name, types, moves, EVs, health="=" * 50, exp=0):
@@ -130,7 +128,6 @@ class Pokemon:
                 break
         money = np.random.choice(5000)
         printf(f"Opponent paid you {money}.")
-
     def PokemonState(self):
         print(
             "Your pokemon has: ",
@@ -147,26 +144,21 @@ class Pokemon:
         )
 
 
-# --------------------Testing
-Charizard = Pokemon('Charizard', 'Fire', [
-                    'Flamethrower', 'Fly', 'Blast Burn', 'Fire Punch'], {'ATTACK': 12, 'DEFENSE': 8})
-Blastoise = Pokemon('Blastoise', 'Water', [
-                    'Water Gun', 'Bubblebeam', 'Hydro Pump', 'Surf'], {'ATTACK': 10, 'DEFENSE': 10})
-Venusaur = Pokemon('Venusaur', 'Grass', [
-                   'Vine Wip', 'Razor Leaf', 'Earthquake', 'Frenzy Plant'], {'ATTACK': 10, 'DEFENSE': 12})
+#--------------------Testing
+Charizard = Pokemon('Charizard', 'Fire', ['Flamethrower', 'Fly', 'Blast Burn', 'Fire Punch'], {'ATTACK':12, 'DEFENSE': 8})
+Blastoise = Pokemon('Blastoise', 'Water', ['Water Gun', 'Bubblebeam', 'Hydro Pump', 'Surf'],{'ATTACK': 10, 'DEFENSE':10})
+Venusaur = Pokemon('Venusaur', 'Grass', ['Vine Wip', 'Razor Leaf', 'Earthquake', 'Frenzy Plant'],{'ATTACK':10, 'DEFENSE':12})
 #
 # list_of_class_instances = {"Charizard": Charizard, "Blastoise": Blastoise, "Venusaur": Venusaur}
 #
 # for i in list_of_class_instances:
 #     list_of_class_instances[i].PokemonState()
 
-# Venusaur.fight(Blastoise)
+#Venusaur.fight(Blastoise)
 #
 # Venusaur.PokemonState()
 
 #
-
-
 def pkmn_battle(player, wild_pkmn):
     for pokemon in player.pokemon:
         pokemon_obj = player.pokemon[pokemon]
@@ -200,9 +192,7 @@ def give_pkmn(player, pkmn):
     else:
         player.pokemon[pkmn.name] = pkmn
 
-
 player = Trainer("Klaus", "Pallet Town", 0, {"venusaur": Charizard})
-rival = Trainer("Ben", "Pallet Town", 0, {
-                "venusaur": Venusaur, "blastoise": Blastoise})
+rival = Trainer("Ben", "Pallet Town", 0, {"venusaur": Venusaur, "blastoise": Blastoise})
 
 trainer_battle(player, rival)
