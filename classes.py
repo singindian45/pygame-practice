@@ -199,7 +199,6 @@ def give_pkmn(player, pkmn):
 
 
 player = Trainer("Klaus", "Pallet Town", 0, {"venusaur": Charizard})
-rival = Trainer("Ben", "Pallet Town", 0, {
-                "venusaur": Venusaur, "blastoise": Blastoise})
+rival = Trainer("Ben", "Pallet Town", 0, {"venusaur": Venusaur, "blastoise": Blastoise})
 
 trainer_battle(player, rival)
