@@ -148,12 +148,9 @@ class Pokemon:
 
 
 # --------------------Testing
-Charizard = Pokemon('Charizard', 'Fire', [
-                    'Flamethrower', 'Fly', 'Blast Burn', 'Fire Punch'], {'ATTACK': 12, 'DEFENSE': 8})
-Blastoise = Pokemon('Blastoise', 'Water', [
-                    'Water Gun', 'Bubblebeam', 'Hydro Pump', 'Surf'], {'ATTACK': 10, 'DEFENSE': 10})
-Venusaur = Pokemon('Venusaur', 'Grass', [
-                   'Vine Wip', 'Razor Leaf', 'Earthquake', 'Frenzy Plant'], {'ATTACK': 10, 'DEFENSE': 12})
+Charizard = Pokemon('Charizard', 'Fire', ['Flamethrower', 'Fly', 'Blast Burn', 'Fire Punch'], {'ATTACK': 12, 'DEFENSE': 8})
+Blastoise = Pokemon('Blastoise', 'Water', ['Water Gun', 'Bubblebeam', 'Hydro Pump', 'Surf'], {'ATTACK': 10, 'DEFENSE': 10})
+Venusaur = Pokemon('Venusaur', 'Grass', ['Vine Wip', 'Razor Leaf', 'Earthquake', 'Frenzy Plant'], {'ATTACK': 10, 'DEFENSE': 12})
 #
 # list_of_class_instances = {"Charizard": Charizard, "Blastoise": Blastoise, "Venusaur": Venusaur}
 #
