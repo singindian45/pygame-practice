@@ -19,7 +19,7 @@ atexit.register(exit_handler)
 # -------------------------------------------------------
 
 # start the BATTLE!
-Charizard.fight(Venusaur)
+Charizard.local_fight(Venusaur)
 
 # -----------------------------------------------------------------------------------------------------------
 
