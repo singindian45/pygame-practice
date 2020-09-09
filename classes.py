@@ -1,10 +1,12 @@
 import numpy as np
 import time
+import os
 from game_functions import printf, inputf, y_or_n
 from pokemons import *
 
-turn=0
-loop=False
+turn = 0
+loop = False
+
 
 class Trainer:
     def __init__(self, name: str, location: str, money=1000, pokemon={}):
@@ -25,6 +27,7 @@ class Trainer:
     # def CapturePokemon(self):
     # global capture
     # capture = True
+
 
 class Pokemon:
     def __init__(self, name, types, moves, EVs, health="=" * 50, exp=0):
@@ -54,7 +57,8 @@ class Pokemon:
         print("DEFENSE/", Pokemon2.defense)
         print("LVL/", 3 * (1 + np.mean([Pokemon2.attack, Pokemon2.defense])))
 
-        time.sleep(1)
+        input("\nPress ENTER to continue...")
+        os.system("clear")
 
         # Consider type advantages
         version = ["Fire", "Water", "Grass"]
@@ -76,17 +80,28 @@ class Pokemon:
                     Pokemon2.attack /= 1.5
                     string_1_attack = "It's super effective!"
                     string_2_attack = "It's not very effective..."
+
         def Pokemon1_turn():
             while (self.bars > 0) and (Pokemon2.bars > 0):
                 # Print the health of each pokemon
-                if loop==False:
-                    print(f"\n{self.name}\t\tHLTH\t{self.health}")
-                    print(f"\n{Pokemon2.name}\t\tHLTH\t{Pokemon2.health}\n")
+                if loop == False:
+                    print(
+                        f"{self.name}\t\tHLTH ({self.health.count('=')}) \t{self.health}"
+                    )
+                    print(
+                        f"{Pokemon2.name}\t\tHLTH ({Pokemon2.health.count('=')}) \t{Pokemon2.health}\n"
+                    )
 
                 print(f"Go {self.name}!")
                 for i, x in enumerate(self.moves):
                     print(f"{i+1}.", x)
-                index = int(input("Pick a move: "))
+                while True:
+                    try:
+                        index = int(input("Pick a move: "))
+                    except ValueError:
+                        print("Invalid move, try again.")
+                        continue
+                    break
                 printf(f"{self.name} used {self.moves[index-1]}!")
                 time.sleep(1)
                 printf(string_1_attack)
@@ -96,27 +111,42 @@ class Pokemon:
                 Pokemon2.health = ""
 
                 # Add back bars plus give a defense boost
-                for j in range(int(Pokemon2.bars + 0.1 * Pokemon2.defense)):
+                for _ in range(int(Pokemon2.bars + 0.1 * Pokemon2.defense)):
                     Pokemon2.health += "="
                 time.sleep(1)
                 global turn
-                turn=1
+                turn = 1
                 time.sleep(0.5)
 
                 # Check if the pokemon has fainted
                 if Pokemon2.bars <= 0:
                     printf(f"\n... {Pokemon2.name} fainted")
-                    turn=10
+                    turn = 10
                     break
                 else:
+                    os.system("clear")
+                    print(
+                        f"{self.name}\t\tHLTH ({self.health.count('=')}) \t{self.health}"
+                    )
+                    print(
+                        f"{Pokemon2.name}\t\tHLTH ({Pokemon2.health.count('=')}) \t{Pokemon2.health}\n"
+                    )
                     break
+
         # ----------------------------------If Pokemon2's hasn't fainted, then it's Pokemon2's turn-------------------------
         def Pokemon2_turn():
-            while (self.bars>0) and (Pokemon2.bars>0):
+
+            while (self.bars > 0) and (Pokemon2.bars > 0):
                 print(f"\nGo {Pokemon2.name}!")
                 for i, x in enumerate(Pokemon2.moves):
                     print(f"{i+1}.", x)
-                index = int(input("Pick a move: "))
+                while True:
+                    try:
+                        index = int(input("Pick a move: "))
+                    except ValueError:
+                        print("Invalid move, try again.")
+                        continue
+                    break
                 printf(f"{Pokemon2.name} used {Pokemon2.moves[index-1]}!")
                 time.sleep(1)
                 printf(string_2_attack)
@@ -126,34 +156,41 @@ class Pokemon:
                 self.health = ""
 
                 # Add back bars plus give a defense boost
-                for j in range(int(self.bars + 0.1 * self.defense)):
+                for _ in range(int(self.bars + 0.1 * self.defense)):
                     self.health += "="
                 time.sleep(1)
-                print(f"{self.name}\t\tHLTH\t{self.health}")
-                print(f"{Pokemon2.name}\t\tHLTH\t{Pokemon2.health}\n")
+                print(f"{self.name}\t\tHLTH ({self.health.count('=')}) \t{self.health}")
+                print(
+                    f"{Pokemon2.name}\t\tHLTH ({Pokemon2.health.count('=')}) \t{Pokemon2.health}\n"
+                )
                 global loop
                 global turn
-                loop=True
-                turn=0
+                loop = True
+                turn = 0
                 time.sleep(0.5)
 
                 # Check if the pokemon has fainted
                 if self.bars <= 0:
                     printf("\n..." + self.name + " fainted")
-                    turn=10
+                    turn = 10
                     print(turn)
                     money = np.random.choice(5000)
                     printf(f"Opponent paid you {money}.")
                     break
                 else:
+                    os.system("clear")
+                    print(
+                        f"{self.name}\t\tHLTH ({self.health.count('=')}) \t{self.health}"
+                    )
+                    print(
+                        f"{Pokemon2.name}\t\tHLTH ({Pokemon2.health.count('=')}) \t{Pokemon2.health}\n"
+                    )
                     Pokemon1_turn()
 
-                
-        if turn==0:
-                Pokemon1_turn()
-        if turn==1:
-                Pokemon2_turn()
-
+        if turn == 0:
+            Pokemon1_turn()
+        if turn == 1:
+            Pokemon2_turn()
 
     def PokemonState(self):
         print(
@@ -172,16 +209,31 @@ class Pokemon:
 
 
 # --------------------Testing
-Charizard = Pokemon('Charizard', 'Fire', ['Flamethrower', 'Fly', 'Blast Burn', 'Fire Punch'], {'ATTACK': 12, 'DEFENSE': 8})
-Blastoise = Pokemon('Blastoise', 'Water', ['Water Gun', 'Bubblebeam', 'Hydro Pump', 'Surf'], {'ATTACK': 10, 'DEFENSE': 10})
-Venusaur = Pokemon('Venusaur', 'Grass', ['Vine Wip', 'Razor Leaf', 'Earthquake', 'Frenzy Plant'], {'ATTACK': 10, 'DEFENSE': 12})
+Charizard = Pokemon(
+    "Charizard",
+    "Fire",
+    ["Flamethrower", "Fly", "Blast Burn", "Fire Punch"],
+    {"ATTACK": 12, "DEFENSE": 8},
+)
+Blastoise = Pokemon(
+    "Blastoise",
+    "Water",
+    ["Water Gun", "Bubblebeam", "Hydro Pump", "Surf"],
+    {"ATTACK": 10, "DEFENSE": 10},
+)
+Venusaur = Pokemon(
+    "Venusaur",
+    "Grass",
+    ["Vine Whip", "Razor Leaf", "Earthquake", "Frenzy Plant"],
+    {"ATTACK": 10, "DEFENSE": 12},
+)
 #
 # list_of_class_instances = {"Charizard": Charizard, "Blastoise": Blastoise, "Venusaur": Venusaur}
 #
 # for i in list_of_class_instances:
 #     list_of_class_instances[i].PokemonState()
 
-#Venusaur.fight(Blastoise)
+# Venusaur.fight(Blastoise)
 #
 # Venusaur.PokemonState()
 
@@ -223,4 +275,3 @@ Venusaur = Pokemon('Venusaur', 'Grass', ['Vine Wip', 'Razor Leaf', 'Earthquake',
 # rival = Trainer("Ben", "Pallet Town", 0, {"venusaur": Venusaur, "blastoise": Blastoise})
 
 # trainer_battle(player, rival)
-Charizard.local_fight(Venusaur)
