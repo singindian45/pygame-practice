@@ -101,6 +101,9 @@ class Pokemon:
                     except ValueError:
                         print("Invalid move, try again.")
                         continue
+                    if index>4:
+                        print("Invalid number, try again.")
+                        continue
                     break
                 printf(f"{self.name} used {self.moves[index-1]}!")
                 time.sleep(1)
@@ -159,7 +162,10 @@ class Pokemon:
                 for _ in range(int(self.bars + 0.1 * self.defense)):
                     self.health += "="
                 time.sleep(1)
-                print(f"{self.name}\t\tHLTH ({self.health.count('=')}) \t{self.health}")
+                print(
+                    f"{self.name}\t\tHLTH ({self.health.count('=')}) \t{self.health}"
+                )
+
                 print(
                     f"{Pokemon2.name}\t\tHLTH ({Pokemon2.health.count('=')}) \t{Pokemon2.health}\n"
                 )
