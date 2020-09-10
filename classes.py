@@ -4,6 +4,7 @@ import os
 import random
 from game_functions import printf, inputf, y_or_n
 from pokemons import *
+import pygame
 
 turn = 0
 loop = False
